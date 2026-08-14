@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mongodb_b:
+    image: mongo:latest
+    container_name: audio_app_db_b
+    restart: always
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_DATABASE: audio_db_b
+    volumes:
+      - mongo_data_b:/data/db
+
+volumes:
+  mongo_data_b:
