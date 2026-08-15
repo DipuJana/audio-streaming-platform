@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+// Live production API URL from Render
+const API_BASE_URL = 'https://audio-streaming-platform-rtft.onrender.com';
+
 function App() {
   const [activeTab, setActiveTab] = useState('search');
   const [query, setQuery] = useState('lofi');
@@ -19,7 +22,7 @@ function App() {
     e.preventDefault();
     const endpoint = authMode === 'login' ? '/api/auth/login' : '/api/auth/register';
     try {
-      const res = await fetch(`http://127.0.0.1:5000${endpoint}`, {
+      const res = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: usernameInput, password: passwordInput })
@@ -70,7 +73,7 @@ function App() {
   const fetchFavorites = async () => {
     if (!token) return;
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/favorites', {
+      const res = await fetch(`${API_BASE_URL}/api/favorites`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -90,7 +93,7 @@ function App() {
   const saveToFavorites = async (song) => {
     if (!token) return alert('Please login to save songs to your account!');
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/favorites', {
+      const res = await fetch(`${API_BASE_URL}/api/favorites`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +117,7 @@ function App() {
   // 5. Delete Favorite (Protected)
   const deleteFavorite = async (id) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/favorites/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/favorites/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
